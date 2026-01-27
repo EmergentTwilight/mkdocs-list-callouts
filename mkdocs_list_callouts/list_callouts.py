@@ -12,7 +12,6 @@ log = logging.getLogger(f"mkdocs.plugins.{__name__}")
 
 _cached_patterns = {}
 
-# 默认的 CSS 样式
 DEFAULT_CSS = """
 :root {
   --md-list-callouts-bg-intensity-light: 0.15;
@@ -123,6 +122,7 @@ DEFAULT_CSS = """
 }
 """
 
+
 class ListCalloutsTreeprocessor(Treeprocessor):
     """
     Process Markdown list items, converting list items that start with specific symbols into styled callouts.
@@ -145,20 +145,16 @@ class ListCalloutsTreeprocessor(Treeprocessor):
         if pattern_key in _cached_patterns:
             self.pattern = _cached_patterns[pattern_key]
         else:
-            self.pattern = re.compile(
-                r"^\s*([{}])\s+(.*)".format(escaped_symbols), re.DOTALL
-            )
+            self.pattern = re.compile(r"^\s*([{}])\s+(.*)".format(escaped_symbols), re.DOTALL)
             _cached_patterns[pattern_key] = self.pattern
 
-        log.debug(
-            f"<ListCallouts> Initialized ListCalloutsTreeprocessor with symbols_map: {symbol_map}"
-        )
+        log.debug(f"<ListCallouts> Initialized ListCalloutsTreeprocessor with symbols_map: {symbol_map}")
 
     def run(self, root):
         # 如果需要插入默认 CSS，则在文档头部添加 <style> 标签
         if self.insert_default_css:
             self.insert_css(root)
-            
+
         for li in root.iter("li"):
             self.process_li(li)
         return root
@@ -171,19 +167,19 @@ class ListCalloutsTreeprocessor(Treeprocessor):
             # 查找 <head> 标签
             head = None
             for element in root.iter():
-                if element.tag == 'head':
+                if element.tag == "head":
                     head = element
                     break
-            
+
             # 如果找到 <head> 标签，在其中添加 <style>
             if head is not None:
-                style = et.Element('style')
+                style = et.Element("style")
                 style.text = DEFAULT_CSS
                 head.append(style)
                 log.debug("<ListCallouts> Inserted default CSS into <head>")
             else:
                 # 如果没有找到 <head> 标签，则在文档根部添加 <style>
-                style = et.Element('style')
+                style = et.Element("style")
                 style.text = DEFAULT_CSS
                 # 将 style 元素插入到文档的最前面
                 root.insert(0, style)
@@ -193,9 +189,7 @@ class ListCalloutsTreeprocessor(Treeprocessor):
 
     def process_li(self, li):
         try:
-            log.debug(
-                f"<ListCallouts> Processing list item: {et.tostring(li, encoding='unicode')}"
-            )
+            log.debug(f"<ListCallouts> Processing list item: {et.tostring(li, encoding='unicode')}")
             content_nodes, list_nodes = self.split_children(li)
             if not content_nodes:
                 log.debug("<ListCallouts> No content nodes found in list item")
@@ -204,9 +198,7 @@ class ListCalloutsTreeprocessor(Treeprocessor):
             text_content = self.get_text_content(content_nodes)
             match = self.pattern.match(text_content)
             if not match:
-                log.debug(
-                    f"<ListCallouts> No matching symbol found in text content: {text_content}"
-                )
+                log.debug(f"<ListCallouts> No matching symbol found in text content: {text_content}")
                 return
 
             symbol = match.group(1)
@@ -216,9 +208,7 @@ class ListCalloutsTreeprocessor(Treeprocessor):
                 log.debug(f"<ListCallouts> Symbol '{symbol}' not found in symbol_map")
                 return
 
-            log.debug(
-                f"<ListCallouts> Matched symbol: {symbol}, class_name: {class_name}"
-            )
+            log.debug(f"<ListCallouts> Matched symbol: {symbol}, class_name: {class_name}")
 
             div = et.Element("div")
             div.set("class", f"list-callouts list-callouts-{class_name}")
@@ -233,9 +223,7 @@ class ListCalloutsTreeprocessor(Treeprocessor):
             for node in list_nodes:
                 li.append(node)
 
-            log.debug(
-                f"<ListCallouts> Processed list item: {et.tostring(li, encoding='unicode')}"
-            )
+            log.debug(f"<ListCallouts> Processed list item: {et.tostring(li, encoding='unicode')}")
         except Exception as e:
             log.error(f"<ListCallouts> Error processing list item: {e}")
 
@@ -283,7 +271,7 @@ class ListCalloutsExtension(Extension):
     def __init__(self, **kwargs):
         self.config = {
             "symbol_map": [{}, "Mapping of symbols to CSS class suffixes"],
-            "insert_default_css": [False, "Whether to insert default CSS styles into the document"]
+            "insert_default_css": [False, "Whether to insert default CSS styles into the document"],
         }
         super().__init__(**kwargs)
 

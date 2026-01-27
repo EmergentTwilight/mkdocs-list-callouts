@@ -1,6 +1,6 @@
-## MkDocs List Callouts Plugin
+## MkDocs List Callouts
 
-[中文](#mkdocs-list-callouts-plugin-zh-cn)
+[中文](#mkdocs-list-callouts-zh-cn)
 
 ### Introduction
 
@@ -15,8 +15,8 @@ This plugin has been tested and works well with the [mkdocs-material](https://gi
 This plugin is not yet published on PyPI. Please install it using the following method:
 
 ```bash
-git clone https://github.com/EmergentTwilight/mkdocs-list-callouts-plugin.git
-cd mkdocs-list-callouts-plugin
+git clone https://github.com/EmergentTwilight/mkdocs-list-callouts.git
+cd mkdocs-list-callouts
 pip install .
 ```
 
@@ -44,15 +44,15 @@ The plugin is implemented using Python Markdown's Treeprocessor mechanism, modif
 
 Default symbol mappings are as follows:
 
-| Symbol | CSS Class Name |
-|--------|---------------|
-| `&` | list-callouts-highlight |
-| `?` | list-callouts-question |
-| `!` | list-callouts-warning |
-| `~` | list-callouts-bookmark |
-| `@` | list-callouts-tip |
-| `$` | list-callouts-success |
-| `%` | list-callouts-quote |
+| Symbol | CSS Class Name          |
+| ------ | ----------------------- |
+| `&`    | list-callouts-highlight |
+| `?`    | list-callouts-question  |
+| `!`    | list-callouts-warning   |
+| `~`    | list-callouts-bookmark  |
+| `@`    | list-callouts-tip       |
+| `$`    | list-callouts-success   |
+| `%`    | list-callouts-quote     |
 
 ##### CSS Style Injection
 
@@ -61,12 +61,17 @@ The configuration option `insert_default_css` is set to `True` by default, which
 ```css
 /* & */
 .list-callouts-highlight {
-    background-color: rgba(246, 217, 67, calc(var(--md-list-callouts-bg-intensity-light) * 100%));
+  background-color: rgba(
+    246,
+    217,
+    67,
+    calc(var(--md-list-callouts-bg-intensity-light) * 100%)
+  );
 }
 
 .list-callouts-highlight::before {
-    content: "&";
-    color: rgb(246, 217, 67);
+  content: "&";
+  color: rgb(246, 217, 67);
 }
 ```
 
@@ -78,22 +83,21 @@ You can customize symbol mappings and whether to use default CSS styles in your 
 plugins:
   - list_callouts:
       symbol_map:
-        "&": "highlight"  # Maps to CSS class name: list-callouts-highlight
+        "&": "highlight" # Maps to CSS class name: list-callouts-highlight
         "?": "question"
         "!": "warning"
         "~": "bookmark"
         "@": "tip"
         "$": "success"
         "%": "quote"
-      insert_default_css: false  # Set to false to disable default CSS style injection
+      insert_default_css: false # Set to false to disable default CSS style injection
 ```
 
 `symbol_map` defines the mapping relationship between special symbols and CSS class names, while `insert_default_css` controls whether default CSS styles are automatically injected.
 
 To use custom styles, you can copy and modify the [list-callouts-default.css](assets/list-callouts-default.css) file, set `insert_default_css` to `false`, and reference your custom CSS file in your `mkdocs.yml`.
 
-
-## MkDocs List Callouts Plugin (zh-CN)
+## MkDocs List Callouts (zh-CN)
 
 ### 简介
 
@@ -108,8 +112,8 @@ To use custom styles, you can copy and modify the [list-callouts-default.css](as
 本插件目前尚未发布至PyPI，请通过以下方式进行安装：
 
 ```bash
-git clone https://github.com/EmergentTwilight/mkdocs-list-callouts-plugin.git
-cd mkdocs-list-callouts-plugin
+git clone https://github.com/EmergentTwilight/mkdocs-list-callouts.git
+cd mkdocs-list-callouts
 pip install .
 ```
 
@@ -137,15 +141,15 @@ plugins:
 
 默认支持的符号映射如下：
 
-| 符号 | CSS类名 |
-|------|---------|
-| `&` | list-callouts-highlight |
-| `?` | list-callouts-question |
-| `!` | list-callouts-warning |
-| `~` | list-callouts-bookmark |
-| `@` | list-callouts-tip |
-| `$` | list-callouts-success |
-| `%` | list-callouts-quote |
+| 符号 | CSS类名                 |
+| ---- | ----------------------- |
+| `&`  | list-callouts-highlight |
+| `?`  | list-callouts-question  |
+| `!`  | list-callouts-warning   |
+| `~`  | list-callouts-bookmark  |
+| `@`  | list-callouts-tip       |
+| `$`  | list-callouts-success   |
+| `%`  | list-callouts-quote     |
 
 ##### CSS样式注入
 
@@ -154,12 +158,17 @@ plugins:
 ```css
 /* & */
 .list-callouts-highlight {
-    background-color: rgba(246, 217, 67, calc(var(--md-list-callouts-bg-intensity-light) * 100%));
+  background-color: rgba(
+    246,
+    217,
+    67,
+    calc(var(--md-list-callouts-bg-intensity-light) * 100%)
+  );
 }
 
 .list-callouts-highlight::before {
-    content: "&";
-    color: rgb(246, 217, 67);
+  content: "&";
+  color: rgb(246, 217, 67);
 }
 ```
 
@@ -171,14 +180,14 @@ plugins:
 plugins:
   - list_callouts:
       symbol_map:
-        "&": "highlight"  # 映射到CSS类名：list-callouts-highlight
+        "&": "highlight" # 映射到CSS类名：list-callouts-highlight
         "?": "question"
         "!": "warning"
         "~": "bookmark"
         "@": "tip"
         "$": "success"
         "%": "quote"
-      insert_default_css: false  # 设置为false可禁用默认CSS样式注入
+      insert_default_css: false # 设置为false可禁用默认CSS样式注入
 ```
 
 `symbol_map` 定义了特殊符号与CSS类名的映射关系，`insert_default_css` 控制是否自动注入默认CSS样式。
